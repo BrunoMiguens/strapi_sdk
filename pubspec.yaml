@@ -1,7 +1,7 @@
 name: strapi_sdk
-description: A new Flutter package project.
+description: A flutter sdk for Strapi backend
 version: 0.0.1
-homepage:
+homepage: https://github.com/loicgeek/strapi_sdk
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
