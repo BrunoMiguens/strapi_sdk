@@ -11,20 +11,14 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+
 StrapiSdk is a flutter sdk to interact with Strapi Server
 
 ## Features
 With StrapiSdk you can find,findOne,create,update and delete a ressource
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
 ## Getting started
 Install strapi_sdk with the command ```flutter pub add strapi_sdk```
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
 
 ## Usage
 
@@ -107,6 +101,4 @@ class Item {
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+This package is under active development
