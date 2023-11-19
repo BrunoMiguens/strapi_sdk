@@ -1,30 +1,17 @@
-class StrapiPagination {
-  late int page;
-  late int pageSize;
-  late int pageCount;
-  late int total;
-  StrapiPagination({
-    required this.page,
-    required this.pageSize,
-    required this.pageCount,
-    required this.total,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  factory StrapiPagination.fromJson(Map<String, dynamic> json) {
-    return StrapiPagination(
-      page: json['page'],
-      pageSize: json['pageSize'],
-      pageCount: json['pageCount'],
-      total: json['total'],
-    );
-  }
+part 'strapi_pagination.freezed.dart';
+part 'strapi_pagination.g.dart';
 
-  Map<String, dynamic> toJson() {
-    return {
-      "page": page,
-      "pageSize": pageSize,
-      "pageCount": pageCount,
-      "total": total,
-    };
-  }
+@freezed
+class StrapiPagination with _$StrapiPagination {
+  const factory StrapiPagination({
+    required int page,
+    required int pageSize,
+    required int pageCount,
+    required int total,
+  }) = _StrapiPagination;
+
+  factory StrapiPagination.fromJson(Map<String, Object?> json) =>
+      _$StrapiPaginationFromJson(json);
 }

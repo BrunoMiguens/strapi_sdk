@@ -1,6 +1,7 @@
 library strapi_sdk;
 
 import 'package:dio/dio.dart';
+import 'package:strapi_sdk/src/models/strapi_auth.dart';
 import 'src/models/strapi_collection.dart';
 import 'src/models/strapi_document.dart';
 import 'src/strapi_query_builder.dart';
@@ -8,6 +9,7 @@ import 'src/strapi_query_builder.dart';
 export 'src/strapi_query_builder.dart';
 export 'src/models/strapi_collection.dart';
 export 'src/models/strapi_document.dart';
+export 'src/models/strapi_auth.dart';
 
 /// A flutter SDK for a Strapi Backend
 class StrapiSdk {
@@ -23,7 +25,7 @@ class StrapiSdk {
   }
 
   ///Initialize strapi sdk with [endpoint] and the [token]
-  static void init({
+  static StrapiSdk init({
     required endpoint,
     required token,
   }) =>
@@ -69,7 +71,7 @@ class StrapiSdk {
   Future<StrapiCollection<T>> find<T>(
     String entryName, {
     StrapiQueryBuilder? params,
-    required T Function(Map<String, dynamic> json) converter,
+    required T Function(Object? json) converter,
   }) async {
     Response resp =
         await _client.get("/$entryName?${params?.buildQueryString()}");
@@ -79,7 +81,7 @@ class StrapiSdk {
   Future<StrapiDocument<T>> findOne<T>(
     String entryName,
     int documentId, {
-    required T Function(Map<String, dynamic> json) converter,
+    required T Function(Object? json) converter,
   }) async {
     Response resp = await _client.get("/$entryName/$documentId");
     return StrapiDocument.fromJson(resp.data['data'], converter);
@@ -88,7 +90,7 @@ class StrapiSdk {
   Future<StrapiDocument<T>> create<T>(
     String entryName,
     Map<String, dynamic> data, {
-    required T Function(Map<String, dynamic> json) converter,
+    required T Function(Object? json) converter,
   }) async {
     Response resp = await _client.post(
       "/$entryName",
@@ -101,7 +103,7 @@ class StrapiSdk {
     String entryName,
     int documentId,
     Map<String, dynamic> data, {
-    required T Function(Map<String, dynamic> json) converter,
+    required T Function(Object? json) converter,
   }) async {
     Response resp = await _client.put(
       "/$entryName/$documentId",
@@ -113,9 +115,21 @@ class StrapiSdk {
   Future<StrapiDocument<T>> delete<T>(
     String entryName,
     int documentId, {
-    required T Function(Map<String, dynamic> json) converter,
+    required T Function(Object? json) converter,
   }) async {
     Response resp = await _client.delete("/$entryName/$documentId");
     return StrapiDocument.fromJson(resp.data['data'], converter);
+  }
+
+  Future<StrapiAuth<T>> login<T>({
+    required String identifier,
+    required String password,
+    required T Function(Object? json) converter,
+  }) async {
+    Response resp = await _client.post(
+      "/auth/local",
+      data: {'identifier': identifier, 'password': password},
+    );
+    return StrapiAuth.fromJson(resp.data, converter);
   }
 }

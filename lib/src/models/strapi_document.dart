@@ -1,20 +1,18 @@
-class StrapiDocument<T> {
-  late T attributes;
-  late int id;
-  StrapiDocument({
-    required this.id,
-    required this.attributes,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'strapi_document.freezed.dart';
+part 'strapi_document.g.dart';
+
+@Freezed(genericArgumentFactories: true)
+class StrapiDocument<Model> with _$StrapiDocument<Model> {
+  const factory StrapiDocument({
+    required int id,
+    required Model attributes,
+  }) = _StrapiDocument<Model>;
 
   factory StrapiDocument.fromJson(
     Map<String, dynamic> json,
-    T Function(Map<String, dynamic> json) converter,
-  ) {
-    return StrapiDocument<T>(
-      id: json["id"],
-      attributes: converter(
-        json["attributes"],
-      ),
-    );
-  }
+    Model Function(Object? json) fromJsonModel,
+  ) =>
+      _$StrapiDocumentFromJson<Model>(json, fromJsonModel);
 }
